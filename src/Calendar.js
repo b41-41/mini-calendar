@@ -1,4 +1,5 @@
 import React from 'react';
+import './calendar.css';
 
 const Calendar = () => {
 
@@ -7,7 +8,7 @@ const Calendar = () => {
             <div className="calendar">
                 <div className="month">
                     <div className="month__current">2021.10</div>
-                    <div>
+                    <div className="month__button">
                         <div className="month__handle">{`<`}</div>
                         <div className="month__handle">{`>`}</div>
                         <div className="month__returnCurrent">이번달</div>
@@ -23,11 +24,11 @@ const Calendar = () => {
                     <div>일</div>
                 </div>
                 <div className="day">
-                    <div className="prev-day">26</div>
-                    <div className="prev-day">27</div>
-                    <div className="prev-day">28</div>
-                    <div className="prev-day">29</div>
-                    <div className="prev-day">30</div>
+                    <div className="day__prev">26</div>
+                    <div className="day__prev">27</div>
+                    <div className="day__prev">28</div>
+                    <div className="day__prev">29</div>
+                    <div className="day__prev">30</div>
                     <div>1</div>
                     <div>2</div>
                     <div>3</div>
@@ -51,7 +52,7 @@ const Calendar = () => {
                     <div>21</div>
                     <div>22</div>
                     <div>23</div>
-                    <div>24</div>
+                    <div className="day__today">24</div>
                     <div>25</div>
                     <div>26</div>
                     <div>27</div>
@@ -59,12 +60,12 @@ const Calendar = () => {
                     <div>29</div>
                     <div>30</div>
                     <div>31</div>
-                    <div clasName="next-day">1</div>
-                    <div clasName="next-day">2</div>
-                    <div clasName="next-day">3</div>
-                    <div clasName="next-day">4</div>
-                    <div clasName="next-day">5</div>
-                    <div clasName="next-day">6</div>
+                    <div className="day__next">1</div>
+                    <div className="day__next">2</div>
+                    <div className="day__next">3</div>
+                    <div className="day__next">4</div>
+                    <div className="day__next">5</div>
+                    <div className="day__next">6</div>
                 </div>
 
             </div>

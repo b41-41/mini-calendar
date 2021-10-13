@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.calendar {
+  font-family: "Nanum Gothic", sans-serif;
+  position: absolute;
+  width: 430px;
+  height: 460px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.month,
+.month__button,
+.week {
+  display: flex;
+  align-items: center;
+  height: calc(460px / 7);
+}
+
+.month,
+.month__button {
+  justify-content: space-between;
+}
+
+.month__current,
+.month__handle {
+  font-weight: 800;
+}
+
+.week div,
+.day div {
+  width: calc(430px / 7);
+}
+
+.day {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  height: calc((460px / 7) * 5);
+}
+
+.day div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(460px / 7);
+}
+
+.day div:hover {
+  cursor: pointer;
+  background-color: rgba(235, 235, 235, 0.527);
+  border-radius: 50%;
+}
