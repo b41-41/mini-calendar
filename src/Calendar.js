@@ -3,12 +3,14 @@ import './calendar.css';
 
 const Calendar = () => {
 
+    const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState((new Date().getMonth()) + 1);
 
     const date = new Date();
     const today = date.getDate();
     const endDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     const prevEndDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
+
     date.setDate(1);
     const startDayIndex = date.getDay();
     const lastDayIndex = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
@@ -17,24 +19,38 @@ const Calendar = () => {
     let prevDays = [];
     let nextDays = [];
 
+    const prevMonth = () => {
+        if (month === 1) {
+            return 12;
+        }
+        return month - 1;
+    }
+
+    const nextMonth = () => {
+        if (month === 12) {
+            return 1;
+        }
+        return month + 1;
+    }
+
     const inputPrevDaysArray = () => {
         for (let x = startDayIndex; x > 0; x--) {
-            prevDays.push(<div className="day__prev">{(prevEndDay - x) + 1}</div>)
+            prevDays.push(<div date={`${year}.${prevMonth()}.${x}`} className="day__prev">{(prevEndDay - x) + 1}</div>)
         }
     };
 
     const inputDaysArray = () => {
         for (let i = 1; i <= endDay; i++) {
             i === today ?
-                days.push(<div className="day__today">{i}</div>)
-                : days.push(<div>{i}</div>)
+                days.push(<div date={`${year}.${month}.${i}`} className="day__today">{i}</div>)
+                : days.push(<div date={`${year}.${month}.${i}`}>{i}</div>)
         };
     };
 
     const inputNextDaysArray = () => {
         const nextDaysLength = 6 - lastDayIndex;
         for (let j = 1; j <= nextDaysLength; j++) {
-            nextDays.push(<div className="day__next">{j}</div>)
+            nextDays.push(<div date={`${year}.${nextMonth()}.${j}`} className="day__next">{j}</div>)
         }
     };
 
