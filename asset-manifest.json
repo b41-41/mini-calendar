@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/mini-calendar/static/css/main.450ef082.chunk.css",
+    "main.js": "/mini-calendar/static/js/main.9ad669a5.chunk.js",
+    "main.js.map": "/mini-calendar/static/js/main.9ad669a5.chunk.js.map",
+    "runtime-main.js": "/mini-calendar/static/js/runtime-main.32d74457.js",
+    "runtime-main.js.map": "/mini-calendar/static/js/runtime-main.32d74457.js.map",
+    "static/js/2.3f03e7ce.chunk.js": "/mini-calendar/static/js/2.3f03e7ce.chunk.js",
+    "static/js/2.3f03e7ce.chunk.js.map": "/mini-calendar/static/js/2.3f03e7ce.chunk.js.map",
+    "index.html": "/mini-calendar/index.html",
+    "static/css/main.450ef082.chunk.css.map": "/mini-calendar/static/css/main.450ef082.chunk.css.map",
+    "static/js/2.3f03e7ce.chunk.js.LICENSE.txt": "/mini-calendar/static/js/2.3f03e7ce.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.32d74457.js",
+    "static/js/2.3f03e7ce.chunk.js",
+    "static/css/main.450ef082.chunk.css",
+    "static/js/main.9ad669a5.chunk.js"
+  ]
+}
