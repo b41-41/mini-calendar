@@ -44,6 +44,16 @@ const Calendar = () => {
         }
     };
 
+    const clickedEventPrev = (e) => {
+        clickedEvent(e);
+        switchPrevMonth();
+    }
+
+    const clickedEventNext = (e) => {
+        clickedEvent(e);
+        switchNextMonth();
+    }
+
     const cancleSelect = () => {
         document.querySelectorAll('.day div').forEach(x => x.classList.remove('day__select'));
     }
@@ -51,7 +61,7 @@ const Calendar = () => {
     const returnPrevDaysArray = (year, month) => {
         let prevDaysArray = [];
         for (let x = startDayIndex; x > 0; x--) {
-            prevDaysArray.push(<div id={`${year}.${month}.${(prevEndDay - x) + 1}`} className="day__prev" onClick={clickedEvent}>{(prevEndDay - x) + 1}</div>);
+            prevDaysArray.push(<div id={`${year}.${month}.${(prevEndDay - x) + 1}`} className="day__prev" onClick={clickedEventPrev}>{(prevEndDay - x) + 1}</div>);
         };
         return prevDaysArray;
     };
@@ -74,7 +84,7 @@ const Calendar = () => {
         const nextDaysLength = 6 - lastDayIndex;
         let nextDaysArray = [];
         for (let j = 1; j <= nextDaysLength; j++) {
-            nextDaysArray.push(<div id={`${year}.${month}.${j}`} className="day__next" onClick={clickedEvent}>{j}</div>)
+            nextDaysArray.push(<div id={`${year}.${month}.${j}`} className="day__next" onClick={clickedEventNext}>{j}</div>)
         };
         return nextDaysArray;
     };
@@ -85,7 +95,6 @@ const Calendar = () => {
         } else {
             setDateValue({ ...dateValue, month: dateValue.month - 1 });
         };
-        // selectedDatePrint();
     };
 
     const switchNextMonth = () => {
@@ -94,12 +103,10 @@ const Calendar = () => {
         } else {
             setDateValue({ ...dateValue, month: dateValue.month + 1 });
         };
-        // selectedDatePrint();
     };
 
     const switchCurrentMonth = () => {
         setDateValue({ ...dateValue, year: new Date().getFullYear(), month: (new Date().getMonth()) + 1 });
-        // selectedDatePrint();
     }
 
 
