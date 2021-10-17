@@ -3,91 +3,90 @@ import './calendar.css';
 
 const Calendar = () => {
 
-    const [year, setYear] = useState(new Date().getFullYear());
-    const [month, setMonth] = useState((new Date().getMonth()) + 1);
+    const [dateValue, setDateValue] = useState({
+        year: new Date().getFullYear(),
+        month: (new Date().getMonth())
+    });
 
     const date = new Date();
+    const prevEndDay = new Date(dateValue.year, dateValue.month - 1, 0).getDate();
     const today = date.getDate();
-    const endDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    const prevEndDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
+    const endDay = new Date(dateValue.year, dateValue.month, 0).getDate();
 
     date.setDate(1);
-    const startDayIndex = date.getDay();
-    const lastDayIndex = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
-
-    let days = [];
-    let prevDays = [];
-    let nextDays = [];
+    const startDayIndex = new Date(dateValue.year, dateValue.month - 1, 1).getDay();
+    const lastDayIndex = new Date(dateValue.year, dateValue.month, 0).getDay();
 
     const prevMonth = () => {
-        if (month === 1) {
-            return 12;
+        if (dateValue.month === 0) {
+            return 11;
         }
-        return month - 1;
-    }
+        return dateValue.month - 1;
+    };
 
     const nextMonth = () => {
-        if (month === 12) {
-            return 1;
+        if (dateValue.month === 12) {
+            return 0;
         }
-        return month + 1;
-    }
+        return dateValue.month + 1;
+    };
 
-    const inputPrevDaysArray = () => {
+    const returnPrevDaysArray = (year, month) => {
+        let prevDaysArray = [];
         for (let x = startDayIndex; x > 0; x--) {
-            prevDays.push(<div date={`${year}.${prevMonth()}.${x}`} className="day__prev">{(prevEndDay - x) + 1}</div>)
-        }
-    };
-
-    const inputDaysArray = () => {
-        for (let i = 1; i <= endDay; i++) {
-            i === today ?
-                days.push(<div date={`${year}.${month}.${i}`} className="day__today">{i}</div>)
-                : days.push(<div date={`${year}.${month}.${i}`}>{i}</div>)
+            prevDaysArray.push(<div date={`${year}.${month}.${x}`} className="day__prev">{(prevEndDay - x) + 1}</div>);
         };
+        return prevDaysArray;
     };
 
-    const inputNextDaysArray = () => {
+    const returnDaysArray = (year, month) => {
+        let daysArray = [];
+        for (let i = 1; i <= endDay; i++) {
+            if (month + 1 === new Date().getMonth() + 1) {
+                i === today ?
+                    daysArray.push(<div date={`${year}.${month + 1}.${i}`} className="day__today">{i}</div>)
+                    : daysArray.push(<div date={`${year}.${month + 1}.${i}`}>{i}</div>)
+            } else {
+                daysArray.push(<div date={`${year}.${month + 1}.${i}`}>{i}</div>)
+            }
+        };
+        return daysArray;
+    };
+
+    const returnNextDaysArray = (year, month) => {
         const nextDaysLength = 6 - lastDayIndex;
+        let nextDaysArray = [];
         for (let j = 1; j <= nextDaysLength; j++) {
-            nextDays.push(<div date={`${year}.${nextMonth()}.${j}`} className="day__next">{j}</div>)
-        }
+            nextDaysArray.push(<div date={`${year}.${month}.${j}`} className="day__next">{j}</div>)
+        };
+        return nextDaysArray;
     };
 
     const switchPrevMonth = () => {
-        month === 1 ?
-            setMonth(12) :
-            setMonth(month - 1);
+        if (dateValue.month === 0) {
+            setDateValue({ ...dateValue, month: 11, year: dateValue.year - 1 });
+        } else {
+            setDateValue({ ...dateValue, month: dateValue.month - 1 });
+        };
     };
 
     const switchNextMonth = () => {
-        month === 12 ?
-            setMonth(0) :
-            setMonth(month + 1);
+        if (dateValue.month === 11) {
+            setDateValue({ ...dateValue, month: 0, year: dateValue.year + 1 });
+        } else {
+            setDateValue({ ...dateValue, month: dateValue.month + 1 });
+        };
     };
 
     const switchCurrentMonth = () => {
-        setMonth((new Date().getMonth()) + 1);
+        setDateValue({ ...dateValue, year: new Date().getFullYear(), month: (new Date().getMonth()) });
     }
-
-    const init = () => {
-        inputDaysArray();
-        inputPrevDaysArray();
-        inputNextDaysArray();
-    };
-
-    init()
-
-    useEffect(() => {
-        console.log(`month`)
-        console.log(month)
-    }, [month])
 
     return (
         <>
             <div className="calendar">
                 <div className="month">
-                    <div className="month__current">2021.10</div>
+                    <div className="month__current">{`${dateValue.year}.${dateValue.month + 1}`}</div>
                     <div className="month__handle" onClick={switchPrevMonth}>{`<`}</div>
                     <div className="month__handle" onClick={switchNextMonth}>{`>`}</div>
                     <div className="month__returnCurrent" onClick={switchCurrentMonth}>이번달</div>
@@ -102,9 +101,9 @@ const Calendar = () => {
                     <div>일</div>
                 </div>
                 <div className="day">
-                    {prevDays.map(prevDay => prevDay)}
-                    {days.map(day => day)}
-                    {nextDays.map(nextDay => nextDay)}
+                    {returnPrevDaysArray(dateValue.year, prevMonth())}
+                    {returnDaysArray(dateValue.year, dateValue.month)}
+                    {returnNextDaysArray(dateValue.year, nextMonth())}
                 </div>
 
             </div>
