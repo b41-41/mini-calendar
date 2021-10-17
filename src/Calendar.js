@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './calendar.css';
 
 const Calendar = () => {
@@ -13,9 +13,8 @@ const Calendar = () => {
     const today = date.getDate();
     const endDay = new Date(dateValue.year, dateValue.month, 0).getDate();
 
-    date.setDate(1);
-    const startDayIndex = new Date(dateValue.year, dateValue.month - 1, 1).getDay();
-    const lastDayIndex = new Date(dateValue.year, dateValue.month, 0).getDay();
+    const startDayIndex = new Date(dateValue.year, dateValue.month - 1, 0).getDay();
+    const lastDayIndex = new Date(dateValue.year, dateValue.month, -1).getDay();
 
     const prevMonth = () => {
         if (dateValue.month === 0) {
