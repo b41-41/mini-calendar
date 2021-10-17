@@ -39,6 +39,7 @@
 
 .month__handle,
 .month__returnCurrent {
+  border: 0;
   background-color: #faf9f9;
   padding: 8px 30px;
   margin: 0 5px;
@@ -100,7 +101,8 @@
   border-radius: 50%;
 }
 
-.day__select {
+.day__select,
+.day div:focus {
   background-color: rgb(141, 141, 141);
   color: white;
 }
