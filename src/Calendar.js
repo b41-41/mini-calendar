@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './calendar.css';
 
 const Calendar = () => {
@@ -7,6 +7,7 @@ const Calendar = () => {
         year: new Date().getFullYear(),
         month: (new Date().getMonth() + 1)
     });
+    const [selectedDate, setSelectedDate] = useState({ year: "", month: "", day: "" });
 
     const date = new Date();
     const prevEndDay = new Date(dateValue.year, dateValue.month - 1, 0).getDate();
@@ -17,23 +18,40 @@ const Calendar = () => {
     const lastDayIndex = new Date(dateValue.year, dateValue.month, -1).getDay();
 
     const prevMonth = () => {
-        if (dateValue.month === 0) {
-            return 11;
+        if (dateValue.month === 1) {
+            return 12;
         }
         return dateValue.month - 1;
     };
 
     const nextMonth = () => {
         if (dateValue.month === 12) {
-            return 0;
+            return 1;
         }
         return dateValue.month + 1;
     };
 
+    const clickedEvent = (e) => {
+        const eventId = e.target.id;
+        if (eventId === `${selectedDate.year}.${selectedDate.month}.${selectedDate.day}`) {
+            e.target.classList.remove('day__select');
+            setSelectedDate('');
+        } else {
+            cancleSelect();
+            e.target.classList.add('day__select');
+            const eventSplit = eventId.split('.');
+            setSelectedDate({ year: eventSplit[0], month: eventSplit[1], day: eventSplit[2] });
+        }
+    };
+
+    const cancleSelect = () => {
+        document.querySelectorAll('.day div').forEach(x => x.classList.remove('day__select'));
+    }
+
     const returnPrevDaysArray = (year, month) => {
         let prevDaysArray = [];
         for (let x = startDayIndex; x > 0; x--) {
-            prevDaysArray.push(<div date={`${year}.${month}.${x}`} className="day__prev">{(prevEndDay - x) + 1}</div>);
+            prevDaysArray.push(<div id={`${year}.${month}.${(prevEndDay - x) + 1}`} className="day__prev" onClick={clickedEvent}>{(prevEndDay - x) + 1}</div>);
         };
         return prevDaysArray;
     };
@@ -43,10 +61,10 @@ const Calendar = () => {
         for (let i = 1; i <= endDay; i++) {
             if (month === new Date().getMonth() + 1 && year === new Date().getFullYear()) {
                 i === today ?
-                    daysArray.push(<div date={`${year}.${month + 1}.${i}`} className="day__today">{i}</div>)
-                    : daysArray.push(<div date={`${year}.${month + 1}.${i}`}>{i}</div>)
+                    daysArray.push(<div id={`${year}.${month}.${i}`} className="day__today" onClick={clickedEvent}>{i}</div>)
+                    : daysArray.push(<div id={`${year}.${month}.${i}`} onClick={clickedEvent}>{i}</div>)
             } else {
-                daysArray.push(<div date={`${year}.${month + 1}.${i}`}>{i}</div>)
+                daysArray.push(<div id={`${year}.${month}.${i}`} onClick={clickedEvent}>{i}</div>)
             }
         };
         return daysArray;
@@ -56,7 +74,7 @@ const Calendar = () => {
         const nextDaysLength = 6 - lastDayIndex;
         let nextDaysArray = [];
         for (let j = 1; j <= nextDaysLength; j++) {
-            nextDaysArray.push(<div date={`${year}.${month}.${j}`} className="day__next">{j}</div>)
+            nextDaysArray.push(<div id={`${year}.${month}.${j}`} className="day__next" onClick={clickedEvent}>{j}</div>)
         };
         return nextDaysArray;
     };
@@ -67,6 +85,7 @@ const Calendar = () => {
         } else {
             setDateValue({ ...dateValue, month: dateValue.month - 1 });
         };
+        // selectedDatePrint();
     };
 
     const switchNextMonth = () => {
@@ -75,11 +94,27 @@ const Calendar = () => {
         } else {
             setDateValue({ ...dateValue, month: dateValue.month + 1 });
         };
+        // selectedDatePrint();
     };
 
     const switchCurrentMonth = () => {
         setDateValue({ ...dateValue, year: new Date().getFullYear(), month: (new Date().getMonth()) + 1 });
+        // selectedDatePrint();
     }
+
+
+    useEffect(() => {
+        const selectedDatePrint = () => {
+            cancleSelect();
+            document.querySelectorAll('.day div').forEach(date => {
+                if (date.id === `${selectedDate.year}.${selectedDate.month}.${selectedDate.day}`) {
+                    date.classList.add('day__select');
+                }
+            });
+        };
+
+        selectedDatePrint()
+    }, [dateValue.month]);
 
     return (
         <>
@@ -103,6 +138,7 @@ const Calendar = () => {
                     {returnPrevDaysArray(dateValue.year, prevMonth())}
                     {returnDaysArray(dateValue.year, dateValue.month)}
                     {returnNextDaysArray(dateValue.year, nextMonth())}
+                    {console.log(`선택된 날짜: ${selectedDate.year}.${selectedDate.month}.${selectedDate.day}`)}
                 </div>
 
             </div>
