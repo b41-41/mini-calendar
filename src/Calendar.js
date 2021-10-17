@@ -5,7 +5,7 @@ const Calendar = () => {
 
     const [dateValue, setDateValue] = useState({
         year: new Date().getFullYear(),
-        month: (new Date().getMonth())
+        month: (new Date().getMonth() + 1)
     });
 
     const date = new Date();
@@ -42,7 +42,7 @@ const Calendar = () => {
     const returnDaysArray = (year, month) => {
         let daysArray = [];
         for (let i = 1; i <= endDay; i++) {
-            if (month + 1 === new Date().getMonth() + 1) {
+            if (month === new Date().getMonth() + 1 && year === new Date().getFullYear()) {
                 i === today ?
                     daysArray.push(<div date={`${year}.${month + 1}.${i}`} className="day__today">{i}</div>)
                     : daysArray.push(<div date={`${year}.${month + 1}.${i}`}>{i}</div>)
@@ -63,30 +63,30 @@ const Calendar = () => {
     };
 
     const switchPrevMonth = () => {
-        if (dateValue.month === 0) {
-            setDateValue({ ...dateValue, month: 11, year: dateValue.year - 1 });
+        if (dateValue.month === 1) {
+            setDateValue({ ...dateValue, month: 12, year: dateValue.year - 1 });
         } else {
             setDateValue({ ...dateValue, month: dateValue.month - 1 });
         };
     };
 
     const switchNextMonth = () => {
-        if (dateValue.month === 11) {
-            setDateValue({ ...dateValue, month: 0, year: dateValue.year + 1 });
+        if (dateValue.month === 12) {
+            setDateValue({ ...dateValue, month: 1, year: dateValue.year + 1 });
         } else {
             setDateValue({ ...dateValue, month: dateValue.month + 1 });
         };
     };
 
     const switchCurrentMonth = () => {
-        setDateValue({ ...dateValue, year: new Date().getFullYear(), month: (new Date().getMonth()) });
+        setDateValue({ ...dateValue, year: new Date().getFullYear(), month: (new Date().getMonth()) + 1 });
     }
 
     return (
         <>
             <div className="calendar">
                 <div className="month">
-                    <div className="month__current">{`${dateValue.year}.${dateValue.month + 1}`}</div>
+                    <div className="month__current">{`${dateValue.year}.${dateValue.month}`}</div>
                     <div className="month__handle" onClick={switchPrevMonth}>{`<`}</div>
                     <div className="month__handle" onClick={switchNextMonth}>{`>`}</div>
                     <div className="month__returnCurrent" onClick={switchCurrentMonth}>이번달</div>
