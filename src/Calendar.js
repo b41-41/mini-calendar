@@ -17,6 +17,22 @@ const Calendar = () => {
     const startDayIndex = new Date(dateValue.year, dateValue.month - 1, 0).getDay();
     const lastDayIndex = new Date(dateValue.year, dateValue.month, -1).getDay();
 
+    const prevYear = () => {
+        if (dateValue.month === 1) {
+            return dateValue.year - 1;
+        } else {
+            return dateValue.year;
+        };
+    };
+
+    const nextYear = () => {
+        if (dateValue.month === 12) {
+            return dateValue.year + 1;
+        } else {
+            return dateValue.year;
+        };
+    };
+
     const prevMonth = () => {
         if (dateValue.month === 1) {
             return 12;
@@ -142,9 +158,9 @@ const Calendar = () => {
                     <div>일</div>
                 </div>
                 <div className="day">
-                    {returnPrevDaysArray(dateValue.year, prevMonth())}
+                    {returnPrevDaysArray(prevYear(), prevMonth())}
                     {returnDaysArray(dateValue.year, dateValue.month)}
-                    {returnNextDaysArray(dateValue.year, nextMonth())}
+                    {returnNextDaysArray(nextYear(), nextMonth())}
                     {console.log(`선택된 날짜: ${selectedDate.year}.${selectedDate.month}.${selectedDate.day}`)}
                 </div>
 
